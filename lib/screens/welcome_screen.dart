@@ -24,7 +24,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               children: <Widget>[
                 SizedBox(
                   height: 60,
-                  child: Image.asset('images/logo.png'),
+                  child: Hero(
+                    tag: 'imageHero',
+                    child: Image.asset('images/logo.png'),
+                  ),
                 ),
                 Text(
                   'Flash Chat',
