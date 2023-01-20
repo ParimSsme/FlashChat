@@ -1,3 +1,4 @@
+import '../components/rounded_button.dart';
 import '/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -27,21 +28,8 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 48.0,
             ),
             TextField(
-              decoration: const InputDecoration(
-                hintText: 'Enter your email',
-                contentPadding:
-                    EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blue, width: 1.0),
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.lightBlue, width: 2.0),
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                ),
+              decoration: kTextFieldDecoration.copyWith(
+                  hintText: 'Enter your email'
               ),
               onChanged: (value) {
                 //Do something with the user input
@@ -51,21 +39,8 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 16,
             ),
             TextField(
-              decoration: const InputDecoration(
-                hintText: 'Enter your password',
-                contentPadding:
-                    EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blue, width: 1.0),
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.lightBlue, width: 2.0),
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                ),
+              decoration: kTextFieldDecoration.copyWith(
+                hintText: 'Enter your password'
               ),
               onChanged: (value) {
                 //Do something with the user input
@@ -74,24 +49,12 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(
               height: 24.0,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              child: Material(
-                elevation: 5.0,
-                color: kLoginButtonColor,
-                borderRadius: BorderRadius.circular(30.0),
-                child: MaterialButton(
-                  onPressed: () {
-                    //Implement login functionality
-                  },
-                  minWidth: 200.0,
-                  height: 42.0,
-                  child: Text(
-                    'Log In',
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                ),
-              ),
+            RoundedButton(
+              color: kLoginButtonColor,
+              title: 'Log In',
+              onPressed: (){
+
+              },
             ),
             const SizedBox(height: 12),
             IconButton(
