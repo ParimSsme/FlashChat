@@ -1,3 +1,5 @@
+import 'package:email_validator/email_validator.dart';
+
 import '../components/rounded_button.dart';
 import '/constants.dart';
 import 'package:flutter/material.dart';
@@ -29,23 +31,38 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             const SizedBox(
               height: 48.0,
             ),
-            TextField(
+            TextFormField(
               decoration: kTextFieldDecoration.copyWith(
-                  hintText: 'Enter your email'
+                  hintText: 'Enter your email',
+                  labelText: 'Email'
               ),
               onChanged: (value) {
                 //Do something with the user input
+              },
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              validator: (email){
+                return email != null && EmailValidator.validate(email)
+                    ? null
+                    : 'Please enter a valid email';
               },
             ),
             const SizedBox(
               height: 16,
             ),
-            TextField(
+            TextFormField(
               decoration: kTextFieldDecoration.copyWith(
-                  hintText: 'Enter your password'
+                  hintText: 'Enter your password',
+                  labelText: 'Password'
               ),
+              obscureText: true,
               onChanged: (value) {
                 //Do something with the user input
+              },
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              validator: (password){
+                return password != null && password.length > 5
+                    ? null
+                    : 'The password should be of 6 characters at least.';
               },
             ),
             const SizedBox(
