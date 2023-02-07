@@ -1,5 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flash_chat_starting_project/screens/chat_screen.dart';
 
 import '../components/rounded_button.dart';
 import '/constants.dart';
@@ -85,7 +86,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   auth.createUserWithEmailAndPassword(
                       email: _emailController.text,
                       password: _passwordController.text
-                  );
+                  )
+                  .then((value) {
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, ChatScreen.id);
+                  });
                 }
               },
             ),
