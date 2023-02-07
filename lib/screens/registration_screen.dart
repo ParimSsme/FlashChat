@@ -87,11 +87,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             RoundedButton(
               color: kRegisterButtonColor,
               title: 'Register',
-              onPressed: (){
+              onPressed: () async {
                 if (_formKey.currentState!.validate()){
 
                   try{
-                    auth.createUserWithEmailAndPassword(
+                    await auth.createUserWithEmailAndPassword(
                         email: _emailController.text,
                         password: _passwordController.text
                     )
@@ -102,7 +102,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   }catch(e){
                     print('ERROR ${e.toString()}');
                     setState((){
-                      errorMessage = e.toString();
+                      errorMessage = e.toString().split('] ')[1];
                     });
                   }
                 }
