@@ -37,6 +37,7 @@ dependencies:
   animated_text_kit: ^4.2.2
   email_validator: ^2.1.17
   firebase_core: ^2.4.1
+  firebase_auth: ^4.2.5
 
 dev_dependencies:
   flutter_test:
