@@ -13,6 +13,7 @@ class RegistrationScreen extends StatefulWidget {
 class _RegistrationScreenState extends State<RegistrationScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,6 +35,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               height: 48.0,
             ),
             Form(
+              key: _formKey,
               child: Column(
                 children: [
                   TextFormField(
@@ -76,7 +78,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               color: kRegisterButtonColor,
               title: 'Register',
               onPressed: (){
-
+                if (_formKey.currentState!.validate()){
+                  print('User data is in correct format');
+                  // Register the user
+                }
               },
             ),
             const SizedBox(height: 12),
