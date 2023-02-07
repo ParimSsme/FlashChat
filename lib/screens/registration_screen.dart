@@ -33,35 +33,41 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             const SizedBox(
               height: 48.0,
             ),
-            TextFormField(
-              decoration: kTextFieldDecoration.copyWith(
-                  hintText: 'Enter your email',
-                  labelText: 'Email'
+            Form(
+              child: Column(
+                children: [
+                  TextFormField(
+                    decoration: kTextFieldDecoration.copyWith(
+                        hintText: 'Enter your email',
+                        labelText: 'Email'
+                    ),
+                    controller: _emailController,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (email){
+                      return email != null && EmailValidator.validate(email)
+                          ? null
+                          : 'Please enter a valid email';
+                    },
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  TextFormField(
+                    decoration: kTextFieldDecoration.copyWith(
+                        hintText: 'Enter your password',
+                        labelText: 'Password'
+                    ),
+                    obscureText: true,
+                    controller: _passwordController,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (password){
+                      return password != null && password.length > 5
+                          ? null
+                          : 'The password should be of 6 characters at least.';
+                    },
+                  ),
+                ],
               ),
-              controller: _emailController,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              validator: (email){
-                return email != null && EmailValidator.validate(email)
-                    ? null
-                    : 'Please enter a valid email';
-              },
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            TextFormField(
-              decoration: kTextFieldDecoration.copyWith(
-                  hintText: 'Enter your password',
-                  labelText: 'Password'
-              ),
-              obscureText: true,
-              controller: _passwordController,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              validator: (password){
-                return password != null && password.length > 5
-                    ? null
-                    : 'The password should be of 6 characters at least.';
-              },
             ),
             const SizedBox(
               height: 24.0,
