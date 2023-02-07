@@ -11,6 +11,8 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,9 +38,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   hintText: 'Enter your email',
                   labelText: 'Email'
               ),
-              onChanged: (value) {
-                //Do something with the user input
-              },
+              controller: _emailController,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               validator: (email){
                 return email != null && EmailValidator.validate(email)
@@ -55,9 +55,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   labelText: 'Password'
               ),
               obscureText: true,
-              onChanged: (value) {
-                //Do something with the user input
-              },
+              controller: _passwordController,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               validator: (password){
                 return password != null && password.length > 5
