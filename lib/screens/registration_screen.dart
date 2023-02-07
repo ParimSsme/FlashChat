@@ -1,4 +1,5 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../components/rounded_button.dart';
 import '/constants.dart';
@@ -14,6 +15,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  var auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,8 +81,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               title: 'Register',
               onPressed: (){
                 if (_formKey.currentState!.validate()){
-                  print('User data is in correct format');
-                  // Register the user
+
+                  auth.createUserWithEmailAndPassword(
+                      email: _emailController.text,
+                      password: _passwordController.text
+                  );
                 }
               },
             ),
