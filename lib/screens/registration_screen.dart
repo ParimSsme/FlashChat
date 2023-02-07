@@ -17,6 +17,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   var auth = FirebaseAuth.instance;
+  String errorMessage = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,20 +79,32 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             const SizedBox(
               height: 24.0,
             ),
+            Text(
+              errorMessage,
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.red, fontSize: 16),
+            ),
             RoundedButton(
               color: kRegisterButtonColor,
               title: 'Register',
               onPressed: (){
                 if (_formKey.currentState!.validate()){
 
-                  auth.createUserWithEmailAndPassword(
-                      email: _emailController.text,
-                      password: _passwordController.text
-                  )
-                  .then((value) {
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, ChatScreen.id);
-                  });
+                  try{
+                    auth.createUserWithEmailAndPassword(
+                        email: _emailController.text,
+                        password: _passwordController.text
+                    )
+                        .then((value) {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, ChatScreen.id);
+                    });
+                  }catch(e){
+                    print('ERROR ${e.toString()}');
+                    setState((){
+                      errorMessage = e.toString();
+                    });
+                  }
                 }
               },
             ),
