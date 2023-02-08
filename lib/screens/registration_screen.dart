@@ -18,6 +18,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   var auth = FirebaseAuth.instance;
   String errorMessage = '';
+  bool errorOccurred = false;
 
   @override
   Widget build(BuildContext context) {
@@ -79,10 +80,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             const SizedBox(
               height: 24.0,
             ),
-            Text(
-              errorMessage,
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.red, fontSize: 16),
+            Visibility(
+              visible: errorOccurred,
+              child: Text(
+                errorMessage,
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.red, fontSize: 16),
+              ),
             ),
             RoundedButton(
               color: kRegisterButtonColor,
@@ -91,6 +95,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 if (_formKey.currentState!.validate()){
 
                   try{
+                    setState((){
+                      errorOccurred = false;
+                    });
+
                     await auth.createUserWithEmailAndPassword(
                         email: _emailController.text,
                         password: _passwordController.text
@@ -102,6 +110,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   }catch(e){
                     print('ERROR ${e.toString()}');
                     setState((){
+                      errorOccurred = true;
                       errorMessage = e.toString().split('] ')[1];
                     });
                   }
