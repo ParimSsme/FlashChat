@@ -48,9 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           hintText: 'Enter your email',
                           labelText: 'Email'
                       ),
-                      onChanged: (value) {
-                        //Do something with the user input
-                      },
+                      controller: _emailController,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (email){
                         return email != null && EmailValidator.validate(email)
