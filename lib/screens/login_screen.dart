@@ -6,6 +6,8 @@ import '../components/rounded_button.dart';
 import '/constants.dart';
 import 'package:flutter/material.dart';
 
+import 'chat_screen.dart';
+
 class LoginScreen extends StatefulWidget {
   static const String id = 'login_screen';
   @override
@@ -18,7 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   var auth = FirebaseAuth.instance;
   String errorMessage = '';
-  bool errorOccurred = false, showSpinner = true;
+  bool errorOccurred = false, showSpinner = false;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 48.0,
               ),
               Form(
+                key: _formKey,
                 child: Column(
                   children: [
                     TextFormField(
@@ -79,11 +82,48 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 24.0,
               ),
+              Visibility(
+                visible: errorOccurred,
+                child: Text(
+                  errorMessage,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.red, fontSize: 16),
+                ),
+              ),
               RoundedButton(
                 color: kLoginButtonColor,
                 title: 'Log In',
-                onPressed: (){
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()){
+                    try{
+                      setState((){
+                        errorOccurred = false;
+                        showSpinner = true;
+                      });
 
+                      await auth
+                          .signInWithEmailAndPassword(
+                          email: _emailController.text,
+                          password: _passwordController.text
+                      )
+                          .then((value) {
+                        Navigator.pop(context);
+                        Navigator.pushNamed(context, ChatScreen.id);
+                      });
+
+                      setState((){
+                        showSpinner = false;
+                      });
+
+                    }catch(e){
+                      print('ERROR ${e.toString()}');
+                      setState((){
+                        showSpinner = false;
+                        errorOccurred = true;
+                        errorMessage = e.toString().split('] ')[1];
+                      });
+                    }
+                  }
                 },
               ),
               const SizedBox(height: 12),

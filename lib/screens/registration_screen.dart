@@ -19,7 +19,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   var auth = FirebaseAuth.instance;
   String errorMessage = '';
-  bool errorOccurred = false, showSpinner = true;
+  bool errorOccurred = false, showSpinner = false;
 
   @override
   Widget build(BuildContext context) {
