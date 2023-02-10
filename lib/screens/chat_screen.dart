@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flash_chat_starting_project/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flash_chat_starting_project/constants.dart';
 
@@ -9,7 +10,7 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  final auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +23,7 @@ class _ChatScreenState extends State<ChatScreen> {
               icon: const Icon(Icons.logout),
               onPressed: () {
                 Navigator.pop(context);
-                auth.signOut();
+                AuthService().signOut();
               }),
         ],
         title: const Text('⚡ ️Chat'),

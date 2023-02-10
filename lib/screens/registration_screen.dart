@@ -4,6 +4,7 @@ import 'package:flash_chat_starting_project/screens/chat_screen.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import '../components/rounded_button.dart';
+import '../services/auth_service.dart';
 import '/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  var auth = FirebaseAuth.instance;
   String errorMessage = '';
   bool errorOccurred = false, showSpinner = false;
 
@@ -102,7 +102,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         showSpinner = true;
                       });
 
-                      await auth.createUserWithEmailAndPassword(
+                      await AuthService().createUserWithEmailAndPassword(
                           email: _emailController.text,
                           password: _passwordController.text
                       )
