@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash_chat_starting_project/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flash_chat_starting_project/constants.dart';
+import '../components/message_bubble.dart';
 
 class ChatScreen extends StatefulWidget {
   static const String id = 'chat_screen';
