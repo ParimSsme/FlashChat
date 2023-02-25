@@ -60,15 +60,17 @@ class _ChatScreenState extends State<ChatScreen> {
                 }
                 if (snapshot.hasData) {
                   var messages = snapshot.data!.docs;
-                  List<Text> messageWidgets = [];
+                  List<Widget> messageBubbles = [];
                   for (var message in messages){
                     var messageText = message.get('text');
                     var sender = message.get('sender');
-                    Text messageWidget = Text('$messageText from $sender');
-                    messageWidgets.add(messageWidget);
+                    Widget messageBubble = MessageBubble(message: messageText, sender: sender);
+                    messageBubbles.add(messageBubble);
                   }
-                  return Column(
-                    children: messageWidgets,
+                  return Expanded(
+                    child: ListView(
+                      children: messageBubbles,
+                    ),
                   );
                 } else {
                   return Center(child: Text('Snapshot has no data'));
@@ -101,6 +103,43 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class MessageBubble extends StatelessWidget {
+  final String? message, sender;
+  const MessageBubble({Key? key, this.message, this.sender}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Material(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(bubbleRadius),
+          topRight: Radius.circular(bubbleRadius),
+          bottomLeft: Radius.circular(bubbleRadius),
+          bottomRight: Radius.circular(bubbleRadius),
+        ),
+        color: Colors.blue,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+          child: Column(
+            children: [
+              Text(
+                sender!,
+                style: TextStyle(fontSize: 12, color: kChatEmailColor),
+              ),
+              SizedBox(height: 8),
+              Text(
+                message!,
+                style: TextStyle(fontSize: 16),
+              ),
+            ],
+          ),
         ),
       ),
     );
