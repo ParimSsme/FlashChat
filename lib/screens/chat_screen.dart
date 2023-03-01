@@ -41,7 +41,10 @@ class _ChatScreenState extends State<ChatScreen> {
           IconButton(
               icon: const Icon(Icons.logout),
               onPressed: () {
-                Navigator.pop(context);
+                if(Navigator.canPop(context)){
+                  Navigator.pop(context);
+                }
+
                 AuthService().signOut();
               }),
         ],
