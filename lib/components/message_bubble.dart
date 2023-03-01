@@ -4,7 +4,8 @@ import '../constants.dart';
 
 class MessageBubble extends StatelessWidget {
   final String? message, sender;
-  const MessageBubble({Key? key, this.message, this.sender}) : super(key: key);
+  final bool? isMe;
+  const MessageBubble({Key? key, this.message, this.sender, this.isMe}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class MessageBubble extends StatelessWidget {
           bottomLeft: Radius.circular(bubbleRadius),
           bottomRight: Radius.circular(bubbleRadius),
         ),
-        color: Colors.blue,
+        color: isMe! ? kSendButtonColor : kSenderBoxColor,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
           child: Column(

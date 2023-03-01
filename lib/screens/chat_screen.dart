@@ -41,7 +41,7 @@ class _ChatScreenState extends State<ChatScreen> {
           IconButton(
               icon: const Icon(Icons.logout),
               onPressed: () {
-                if(Navigator.canPop(context)){
+                if (Navigator.canPop(context)) {
                   Navigator.pop(context);
                 }
 
@@ -70,9 +70,9 @@ class _ChatScreenState extends State<ChatScreen> {
                   TextButton(
                     onPressed: () {
                       _fireStore.collection('messages').add({
-                        'date' : DateTime.now().microsecondsSinceEpoch,
-                        'text' : _messageTextController.text,
-                        'sender' : AuthService().getCurrentUser!.email,
+                        'date': DateTime.now().microsecondsSinceEpoch,
+                        'text': _messageTextController.text,
+                        'sender': AuthService().getCurrentUser!.email,
                       });
                       _messageTextController.clear();
                     },
@@ -93,7 +93,8 @@ class MessageStream extends StatelessWidget {
   const MessageStream({
     Key? key,
     required FirebaseFirestore fireStore,
-  }) : _fireStore = fireStore, super(key: key);
+  })  : _fireStore = fireStore,
+        super(key: key);
 
   final FirebaseFirestore _fireStore;
 
@@ -102,16 +103,24 @@ class MessageStream extends StatelessWidget {
     return StreamBuilder<QuerySnapshot>(
       stream: _fireStore.collection('messages').snapshots(),
       builder: (context, snapshot) {
-        if(snapshot.connectionState == ConnectionState.waiting){
-          return Expanded(child: Center(child: CircularProgressIndicator(backgroundColor: Colors.lightBlue)),);
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Expanded(
+            child: Center(
+                child: CircularProgressIndicator(
+                    backgroundColor: Colors.lightBlue)),
+          );
         }
         if (snapshot.hasData) {
           var messages = snapshot.data!.docs;
           List<Widget> messageBubbles = [];
-          for (var message in messages){
+          for (var message in messages) {
             var messageText = message.get('text');
             var sender = message.get('sender');
-            Widget messageBubble = MessageBubble(message: messageText, sender: sender);
+            Widget messageBubble = MessageBubble(
+              message: messageText,
+              sender: sender,
+              isMe: AuthService().getCurrentUser?.email == sender,
+            );
             messageBubbles.add(messageBubble);
           }
           return Expanded(
