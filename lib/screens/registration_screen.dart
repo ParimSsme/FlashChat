@@ -33,11 +33,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Container(
-                height: 200.0,
+              Flexible(
                 child: Hero(
-                  tag: 'imageHero',
-                  child: Image.asset('images/logo.png'),
+                  tag: 'logo',
+                  child: SizedBox(
+                    height: 200.0,
+                    child: Image.asset('images/logo.png'),
+                  ),
                 ),
               ),
               const SizedBox(
@@ -49,12 +51,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   children: [
                     TextFormField(
                       decoration: kTextFieldDecoration.copyWith(
-                          hintText: 'Enter your email',
-                          labelText: 'Email'
-                      ),
+                          hintText: 'Enter your email', labelText: 'Email'),
                       controller: _emailController,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: (email){
+                      validator: (email) {
                         return email != null && EmailValidator.validate(email)
                             ? null
                             : 'Please enter a valid email';
@@ -66,12 +66,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     TextFormField(
                       decoration: kTextFieldDecoration.copyWith(
                           hintText: 'Enter your password',
-                          labelText: 'Password'
-                      ),
+                          labelText: 'Password'),
                       obscureText: true,
                       controller: _passwordController,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: (password){
+                      validator: (password) {
                         return password != null && password.length > 5
                             ? null
                             : 'The password should be of 6 characters at least.';
@@ -95,29 +94,28 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 color: kRegisterButtonColor,
                 title: 'Register',
                 onPressed: () async {
-                  if (_formKey.currentState!.validate()){
-                    try{
-                      setState((){
+                  if (_formKey.currentState!.validate()) {
+                    try {
+                      setState(() {
                         errorOccurred = false;
                         showSpinner = true;
                       });
 
-                      await AuthService().createUserWithEmailAndPassword(
-                          email: _emailController.text,
-                          password: _passwordController.text
-                      )
+                      await AuthService()
+                          .createUserWithEmailAndPassword(
+                              email: _emailController.text,
+                              password: _passwordController.text)
                           .then((value) {
                         Navigator.pop(context);
                         Navigator.pushNamed(context, ChatScreen.id);
                       });
 
-                      setState((){
+                      setState(() {
                         showSpinner = false;
                       });
-
-                    }catch(e){
+                    } catch (e) {
                       print('ERROR ${e.toString()}');
-                      setState((){
+                      setState(() {
                         showSpinner = false;
                         errorOccurred = true;
                         errorMessage = e.toString().split('] ')[1];
