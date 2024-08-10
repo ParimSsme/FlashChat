@@ -5,7 +5,7 @@ import 'package:flash_chat_starting_project/constants.dart';
 import '../components/message_bubble.dart';
 
 class ChatScreen extends StatefulWidget {
-  static const String id = 'chat_screen';
+  static const String routeName = '/chat_screen';
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }

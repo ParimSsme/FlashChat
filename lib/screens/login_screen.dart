@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'chat_screen.dart';
 
 class LoginScreen extends StatefulWidget {
-  static const String id = 'login_screen';
+  static const String routeName = '/login_screen';
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -107,7 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               password: _passwordController.text)
                           .then((value) {
                         Navigator.pop(context);
-                        Navigator.pushNamed(context, ChatScreen.id);
+                        Navigator.pushNamed(context, ChatScreen.routeName);
                       });
 
                       setState(() {

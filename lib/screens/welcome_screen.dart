@@ -7,7 +7,7 @@ import '/constants.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatefulWidget {
-  static const String id = 'welcome_screen';
+  static const String routeName = '/welcome_screen';
   @override
   _WelcomeScreenState createState() => _WelcomeScreenState();
 }
@@ -80,14 +80,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
               color: kLoginButtonColor,
               title: 'Log In',
               onPressed: (){
-                Navigator.pushNamed(context, LoginScreen.id);
+                Navigator.pushNamed(context, LoginScreen.routeName);
               },
             ),
             RoundedButton(
               color: kRegisterButtonColor,
               title: 'Register',
               onPressed: (){
-                Navigator.pushNamed(context, RegistrationScreen.id);
+                Navigator.pushNamed(context, RegistrationScreen.routeName);
               },
             ),
           ],

@@ -9,7 +9,7 @@ import '/constants.dart';
 import 'package:flutter/material.dart';
 
 class RegistrationScreen extends StatefulWidget {
-  static const String id = 'registration_screen';
+  static const String routeName = '/registration_screen';
   @override
   _RegistrationScreenState createState() => _RegistrationScreenState();
 }
@@ -107,7 +107,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               password: _passwordController.text)
                           .then((value) {
                         Navigator.pop(context);
-                        Navigator.pushNamed(context, ChatScreen.id);
+                        Navigator.pushNamed(context, ChatScreen.routeName);
                       });
 
                       setState(() {
