@@ -1,11 +1,10 @@
+import 'package:flash_chat_starting_project/features/auth/data/repository/authentication_repositoryimpl.dart';
 import 'package:get_it/get_it.dart';
-
-import 'features/auth/repository/auth_repository.dart';
 
 final locator = GetIt.instance;
 
 Future<void> setupLocator() async {
 
   /// Repositories
-  locator.registerSingleton<AuthenticationRepository>(AuthenticationRepository());
+  locator.registerSingleton<AuthenticationRepositoryImpl>(AuthenticationRepositoryImpl());
 }
