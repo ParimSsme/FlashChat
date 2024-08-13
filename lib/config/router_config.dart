@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../features/auth/presentation/screens/login_screen.dart';
 import '../features/auth/presentation/screens/registration_screen.dart';
 import '../features/auth/presentation/screens/welcome_screen.dart';
-import '../screens/chat_screen.dart';
+import '../features/chat/presentation/screens/chat_screen.dart';
 
 class MyRouter{
 

@@ -1,5 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flash_chat_starting_project/screens/chat_screen.dart';
+import 'package:flash_chat_starting_project/features/chat/presentation/screens/chat_screen.dart';
 import 'common/bloc/app_bloc.dart';
 import 'config/my_theme.dart';
 import 'config/router_config.dart';
