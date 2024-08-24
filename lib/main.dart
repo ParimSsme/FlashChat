@@ -20,16 +20,12 @@ Future<void> main() async {
   setupLocator();
 
   runApp(
-      BlocProvider(
-        lazy: false,
-        create: (BuildContext context) => AppBloc(authenticationRepository: locator()),
-        child:  const MyApp(),
-      )
+    const App(),
   );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class App extends StatelessWidget {
+  const App({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,17 +35,20 @@ class MyApp extends StatelessWidget {
       locale: const Locale('en', 'US'),
       onGenerateRoute: MyRouter.routes,
       debugShowCheckedModeBanner: false,
-      themeMode: ThemeMode.light,
-      theme: MyThemes.lightTheme,
-      home: BlocSelector<AppBloc, AppState, AppStatus>(
-        selector: (state) => state.status,
-        builder: (context, appStatus) {
-          if (appStatus == AppStatus.authenticated) {
-             return ChatScreen();
-          } else {
-            return WelcomeScreen();
-          }
-        },
+      themeMode: ThemeMode.dark,
+      theme: darkTheme,
+      home: BlocProvider(
+        create: (_) => locator<AppBloc>(),
+        child: BlocSelector<AppBloc, AppState, AppStatus>(
+          selector: (state) => state.status,
+          builder: (context, appStatus) {
+            if (appStatus == AppStatus.authenticated) {
+              return const ChatScreen();
+            } else {
+              return WelcomeScreen();
+            }
+          },
+        ),
       ),
     );
   }

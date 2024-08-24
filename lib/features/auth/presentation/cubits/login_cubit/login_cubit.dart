@@ -1,8 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flash_chat_starting_project/features/auth/data/repository/authentication_repositoryimpl.dart';
+import 'package:flash_chat_starting_project/common/utils/shared_oprator.dart';
+import 'package:flash_chat_starting_project/locator.dart';
 import 'package:formz/formz.dart';
 import '../../../domain/exceptions/log_in_with_email_and_password.dart';
+import '../../../domain/repository/authentication_repository.dart';
 import '../../utils/email.dart';
 import '../../utils/password.dart';
 part 'login_state.dart';
@@ -10,7 +12,7 @@ part 'login_state.dart';
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit(this._authenticationRepository) : super(const LoginState());
 
-  final AuthenticationRepositoryImpl _authenticationRepository;
+  final AuthenticationRepository _authenticationRepository;
 
   void emailChanged(String value) {
     final email = Email.dirty(value);
@@ -40,6 +42,10 @@ class LoginCubit extends Cubit<LoginState> {
         email: state.email.value,
         password: state.password.value,
       );
+
+      final prefOperator = locator<SharedPrefOperator>();
+      prefOperator.setUserEmail(state.email.value);
+
       emit(state.copyWith(status: FormzSubmissionStatus.success));
     } on LogInWithEmailAndPasswordFailure catch (e) {
       emit(

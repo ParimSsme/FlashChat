@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flash_chat_starting_project/features/auth/data/repository/authentication_repositoryimpl.dart';
 import 'package:formz/formz.dart';
 import '../../../domain/exceptions/sign_up_with_email_and_password.dart';
+import '../../../domain/repository/authentication_repository.dart';
 import '../../utils/confirmed_password.dart';
 import '../../utils/email.dart';
 import '../../utils/password.dart';
@@ -11,7 +11,7 @@ part 'register_state.dart';
 class RegisterCubit extends Cubit<RegisterState> {
   RegisterCubit(this._authenticationRepository) : super(const RegisterState());
 
-  final AuthenticationRepositoryImpl _authenticationRepository;
+  final AuthenticationRepository _authenticationRepository;
 
   void emailChanged(String value) {
     final email = Email.dirty(value);

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:flash_chat_starting_project/features/chat/data/repository/chat_repositoryimpl.dart';
 import 'package:flash_chat_starting_project/features/chat/domain/entity/message_entity.dart';
+import '../../domain/repository/chat_repository.dart';
 
 part 'message_list_status.dart';
 part 'chat_state.dart';
@@ -11,7 +11,7 @@ abstract class ItemsEvent {}
 class LoadItems extends ItemsEvent {}
 
 class ChatCubit extends Cubit<ChatState> {
-  ChatRepositoryImpl repository;
+  ChatRepository repository;
 
   StreamSubscription<List<MessageEntity>>? _itemsSubscription;
 

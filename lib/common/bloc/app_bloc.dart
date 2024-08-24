@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flash_chat_starting_project/features/auth/data/repository/authentication_repositoryimpl.dart';
 import '../../features/auth/data/models/user.dart';
 import '../../features/auth/domain/repository/authentication_repository.dart';
 
@@ -9,7 +8,7 @@ part 'app_event.dart';
 part 'app_state.dart';
 
 class AppBloc extends Bloc<AppEvent, AppState> {
-  AppBloc({required AuthenticationRepositoryImpl authenticationRepository})
+  AppBloc({required AuthenticationRepository authenticationRepository})
       : _authenticationRepository = authenticationRepository,
         super(
           authenticationRepository.currentUser.isNotEmpty

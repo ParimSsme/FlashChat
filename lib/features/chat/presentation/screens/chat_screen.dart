@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flash_chat_starting_project/common/bloc/app_bloc.dart';
+import 'package:flash_chat_starting_project/common/utils/shared_oprator.dart';
 import 'package:flash_chat_starting_project/features/chat/data/repository/chat_repositoryimpl.dart';
 import 'package:flash_chat_starting_project/features/chat/domain/entity/message_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flash_chat_starting_project/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../domain/repository/chat_repository.dart';
 import '../widget/message_bubble.dart';
 import '../../../../locator.dart';
 import '../cubits/chat_cubit.dart';
@@ -21,10 +24,12 @@ class _ChatScreenState extends State<ChatScreen> {
   final _fireStore = FirebaseFirestore.instance;
   final TextEditingController _messageTextController = TextEditingController();
 
+  final prefOperator = locator<SharedPrefOperator>();
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ChatCubit(locator<ChatRepositoryImpl>())..loadAllMessagesEvent(),
+      create: (context) => ChatCubit(locator<ChatRepository>())..loadAllMessagesEvent(),
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: kBackgroundColor,
@@ -37,7 +42,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   if (Navigator.canPop(context)) {
                     Navigator.pop(context);
                   }
-
+                  // context.read<AppBloc>().add(const AppLogoutRequested());
                   // AuthService().signOut();
                 }),
           ],
@@ -62,7 +67,6 @@ class _ChatScreenState extends State<ChatScreen> {
 
                     return  ListView.separated(
                         shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
                         padding: const EdgeInsets.symmetric(horizontal: 5),
                         itemCount: messages.length,
                         itemBuilder: (context, index) {
@@ -70,8 +74,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           return MessageBubble(
                             message: item.text,
                             sender: item.sender,
-                            isMe: true,
-                            // isMe: AuthService().getCurrentUser!.email == sender,
+                            isMe: prefOperator.getUserEmail() == item.sender,
                           );
                         },
                         separatorBuilder: (context, index){
@@ -105,8 +108,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       _fireStore.collection('messages').add({
                         'date': DateTime.now().microsecondsSinceEpoch,
                         'text': _messageTextController.text,
-                        'sender': ''
-                        // 'sender': AuthService().getCurrentUser!.email,
+                        'sender': prefOperator.getUserEmail(),
                       });
                       _messageTextController.clear();
                     },
